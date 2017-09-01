@@ -1,0 +1,28 @@
+version: '2.1'
+services:
+    gs:
+        build: 
+           context: ./geoserver
+           args:
+               ORACLE_JDK: "true"
+               TOMCAT_EXTRAS: "false"
+        links:
+            - postgis:postgis 
+        container_name: geoserver
+        depends_on:
+            postgis:
+              condition: service_healthy 
+        ports:
+            - "8080:8080"
+    postgis:
+        build:
+           context: ./postgis
+        environment:
+           ALLOW_IP_RANGE: "0.0.0.0/0"
+        healthcheck:
+            test: ["CMD", "nc", "-zv", "localhost", "5432"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        container_name: postgis 
+
