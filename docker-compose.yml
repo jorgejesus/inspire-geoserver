@@ -12,8 +12,11 @@ services:
         depends_on:
             postgis:
               condition: service_healthy 
-        ports:
-            - "8080:8080"
+        #ports:
+        #    - "80:8080"
+        networks:
+             vpcbr:
+                ipv4_address: 10.10.10.2
     postgis:
         build:
            context: ./postgis
@@ -24,5 +27,27 @@ services:
             interval: 30s
             timeout: 10s
             retries: 5
-        container_name: postgis 
+        container_name: postgis
+        networks:
+             vpcbr:
+                ipv4_address: 10.10.10.3
+    etf:
+       build:
+           context: ./etf-webapp
+       container_name: etf-webapp
+       volumes:
+           - etf_vol:/etf
+       networks:
+           vpcbr:
+                ipv4_address: 10.10.10.4
+volumes:
+    etf_vol:
+       driver: local
 
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.10.10.0/24
+         gateway: 10.10.10.1

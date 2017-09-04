@@ -11,7 +11,10 @@ echo "host    all             all             192.168.0.0/16               md5" 
  
 
 # Listen on all ip addresses
-echo "listen_addresses = '*'" >> /etc/postgresql/9.5/main/postgresql.conf
+#echo "listen_addresses = '*'" >> /etc/postgresql/9.5/main/postgresql.conf
+
+#the liste_addres * is not working it only binds to localhost
+echo "listen_addresses = '0.0.0.0'" >> /etc/postgresql/9.5/main/postgresql.conf
 echo "port = 5432" >> /etc/postgresql/9.5/main/postgresql.conf
 
 # Enable ssl

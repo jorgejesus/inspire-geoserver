@@ -161,5 +161,5 @@ while [ "$(ls -A /var/run/postgresql/9.5-main.pid 2>/dev/null)" ]; do
 done
 
 echo "Postgres initialisation process completed .... restarting in foreground"
-SETVARS="POSTGIS_ENABLE_OUTDB_RASTERS=1 POSTGIS_GDAL_ENABLED_DRIVERS=ENABLE_ALL"
+SETVARS="PGOPTIONS=-i POSTGIS_ENABLE_OUTDB_RASTERS=1 POSTGIS_GDAL_ENABLED_DRIVERS=ENABLE_ALL"
 su - postgres -c "$SETVARS $POSTGRES -D $DATADIR -c config_file=$CONF"

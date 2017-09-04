@@ -36,6 +36,24 @@ For features
 http://localhost:8080/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&typenames=gsmlgu:GeologicUnit&count=20
 ```
 
+#Network
+
+The containers run on network: *10.10.10.0/16* with gateway: 10.10.10.1
+
+#URLs
+
+Geoserver:
+```
+http://10.10.10.2:8080/geoserver
+http://10.10.10.2:8080/geoserver/wfs?request=GetFeature&service=wfs&version=2.0.0&typeName=gsmlgu:GeologicUnit&outputFormat=gml32&count=2
+```
+
+ETF-webapp:
+```
+http://10.10.10.4:8080/etf-webapp
+```
+ 
+
 
 
 ## Versions
