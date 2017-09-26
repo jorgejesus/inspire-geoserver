@@ -1,4 +1,6 @@
 version: '2.1'
+#Note the .env file with variables
+
 services:
     gs:
         build: 
@@ -16,7 +18,7 @@ services:
         #    - "80:8080"
         networks:
              vpcbr:
-                ipv4_address: 10.10.10.2
+                ipv4_address: "${IP_GS}"
     postgis:
         build:
            context: ./postgis
@@ -30,7 +32,7 @@ services:
         container_name: postgis
         networks:
              vpcbr:
-                ipv4_address: 10.10.10.3
+                ipv4_address: "${IP_PG}"
     etf:
        build:
            context: ./etf-webapp
@@ -39,7 +41,7 @@ services:
            - etf_vol:/etf
        networks:
            vpcbr:
-                ipv4_address: 10.10.10.4
+                ipv4_address: $IP_ETF
 volumes:
     etf_vol:
        driver: local
@@ -49,5 +51,5 @@ networks:
     driver: bridge
     ipam:
      config:
-       - subnet: 10.10.10.0/24
-         gateway: 10.10.10.1
+       - subnet: "${SUBNET}"
+         gateway: "${GTW}"
