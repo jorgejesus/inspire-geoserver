@@ -29,7 +29,7 @@ Geoserver runs on port 8080 (ip: 10.10.10.2) and has the default geoserver login
 Geoserver:
 ```
 http://10.10.10.2:8080/geoserver
-http://localhost:8080/geoserver/ows?service=wfs&version=2.0.0&request=GetCapabilities
+http://10.10.10.2:8080/geoserver/ows?service=wfs&version=2.0.0&request=GetCapabilities
 http://10.10.10.2:8080/geoserver/wfs?request=GetFeature&service=wfs&version=2.0.0&typeName=gsmlgu:GeologicUnit&outputFormat=gml32&count=2
 ```
 And ETF
