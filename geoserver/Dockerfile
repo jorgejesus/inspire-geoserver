@@ -87,9 +87,12 @@ WORKDIR $CATALINA_HOME
 
 # A little logic that will fetch the geoserver war zip file if it
 # is not available locally in the resources dir
+#/tmp/resources/geoserver.zip
+
+#Sourcefource is down: https://downloads.sourceforge.net/project/geoserver/GeoServer/${GS_VERSION}/geoserver-${GS_VERSION}-war.zip"  
+#https://sourceforge.mirrorservice.org/g/ge/geoserver/GeoServer/${GS_VERSION}/geoserver-${GS_VERSION}-war.zip
 RUN if [ ! -f /tmp/resources/geoserver.zip ]; then \
-    wget -c http://downloads.sourceforge.net/project/geoserver/GeoServer/${GS_VERSION}/geoserver-${GS_VERSION}-war.zip \
-      -O /tmp/resources/geoserver.zip; \
+    wget -O /tmp/resources/geoserver.zip -L "https://sourceforge.mirrorservice.org/g/ge/geoserver/GeoServer/${GS_VERSION}/geoserver-${GS_VERSION}-war.zip"  ; \
     fi; \
     unzip /tmp/resources/geoserver.zip -d /tmp/geoserver \
     && unzip /tmp/geoserver/geoserver.war -d $CATALINA_HOME/webapps/geoserver \

@@ -18,12 +18,12 @@ services:
         #    - "80:8080"
         networks:
              vpcbr:
-                ipv4_address: "${IP_GS}"
+                ipv4_address: ${IP_GS}
     postgis:
         build:
            context: ./postgis
         environment:
-           ALLOW_IP_RANGE: "0.0.0.0/0"
+           ALLOW_IP_RANGE: $SUBNET
         healthcheck:
             test: ["CMD", "nc", "-zv", "localhost", "5432"]
             interval: 30s
@@ -32,7 +32,7 @@ services:
         container_name: postgis
         networks:
              vpcbr:
-                ipv4_address: "${IP_PG}"
+                ipv4_address: $IP_PG
     etf:
        build:
            context: ./etf-webapp
@@ -51,5 +51,5 @@ networks:
     driver: bridge
     ipam:
      config:
-       - subnet: "${SUBNET}"
-         gateway: "${GTW}"
+       - subnet: $SUBNET
+         gateway: $GTW
