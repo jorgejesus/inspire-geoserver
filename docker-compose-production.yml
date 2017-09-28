@@ -1,0 +1,47 @@
+version: '2.1'
+#Note the .env file with variables
+
+services:
+    gs:
+        links:
+            - postgis:postgis 
+        container_name: geoserver
+        depends_on:
+            postgis:
+              condition: service_healthy 
+        image: inspiremif/geoserver-bgs
+        networks:
+             vpcbr:
+                ipv4_address: ${IP_GS}
+    postgis:
+        environment:
+           ALLOW_IP_RANGE: $SUBNET
+        healthcheck:
+            test: ["CMD", "nc", "-zv", "localhost", "5432"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        container_name: postgis
+        image: inspiremif/postgis-bgs
+        networks:
+             vpcbr:
+                ipv4_address: $IP_PG
+    etf:
+       container_name: etf-webapp
+       volumes:
+           - etf_vol:/etf
+       image: inspiremif/etf-bgs
+       networks:
+           vpcbr:
+                ipv4_address: $IP_ETF
+volumes:
+    etf_vol:
+       driver: local
+
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: $SUBNET
+         gateway: $GTW
